@@ -12,6 +12,7 @@ def getWord(num):
   return lines
 
 #Some variables
+tries = 0 #total number of guesses
 lives = 6 #number of guesses the user got wrong
 letters = [] #list of letters the user has used
 solved = False #used to track whether the puzzle is solved or not
@@ -23,10 +24,21 @@ for i in range(0,len(answer)):
   guess.append("_")
 
 print("Let's play hangman!")
-print(*guess)
+print("\n",*guess)
 
 while not solved and (lives > 0):
-  this_guess = input("What letter would you like to guess?").upper()[0]
+  tries = tries + 1 #add 1 to our rounds
+
+  #Loop input until user enters an unused letter
+  while True:
+    print("Round: ", tries,"  Lives: ",lives)
+    this_guess = input("What letter would you like to guess?").upper()[0]
+    if this_guess in letters:
+      print("You've already used that letter!")
+    else:
+      letters.append(this_guess)
+      break
+
   found = False
   for ltr in range(0,len(answer)):
     if answer[ltr] == this_guess:
@@ -36,7 +48,7 @@ while not solved and (lives > 0):
     lives = lives - 1
     print("sorry, no letter ", this_guess)
   solved = answer == guess
-  print(*guess)
+  print("\n",*guess)
 
 if solved:
   print("Well done!")
