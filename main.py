@@ -1,4 +1,5 @@
 import random
+import hangmanimages
 
 def getWord(num):
   with open("words", 'r') as fp:
@@ -11,9 +12,24 @@ def getWord(num):
               break
   return lines
 
+hangmanset = [
+  '\n\n\n\n\n_______',
+  '\n|\n|\n|\n|\n|_____',
+  '______\n| /\n|/\n|\n|\n|_____',
+  '______\n| /  |\n|/\n|\n|\n|_____',
+  '______\n| /  |\n|/   O\n|\n|\n|_____',
+  '______\n| /  |\n|/   O\n|    |\n|\n|_____',
+  '______\n| /  |\n|/   O\n|   -|\n|\n|_____',
+  '______\n| /  |\n|/   O\n|   -|-\n|\n|_____',
+  '______\n| /  |\n|/   O\n|   -|-\n|   /\n|_____',
+  '______\n| /  |\n|/   O\n|   -|-\n|   / \\ \n|_____'
+]
+
+#hangmanimages.test()
 #Some variables used in the game
+hangman = hangmanset[::-1] #Get a list of the drawings.
 tries = 0 #total number of guesses
-lives = 10 #number of guesses the user got wrong
+lives = len(hangman) -1  #number of lives defined by the hangman images
 letters = [] #list of letters the user has used
 solved = False #used to track whether the puzzle is solved or not
 
@@ -70,6 +86,9 @@ while not solved and (lives > 0):
 
   #Check to see if the puzzle has been solved 
   solved = answer == guess
+
+  #Draw the hangmanimages
+  print(hangman[lives])
 
   #print the current guess (board)
   print("\n",*guess)
